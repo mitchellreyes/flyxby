@@ -116,7 +116,6 @@ class _ProfileScreenState extends State<ProfileScreen>
     controller =
         AnimationController(duration: Duration(seconds: 10), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
-    controller.forward();
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controller.repeat();
@@ -252,6 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   setState(() {
                                     if (!_flewby) {
                                       _flewby = true;
+                                      controller.forward();
                                     }
                                     int xp_gain =
                                         ((log(_currentMoonXP) / log(2)) * 10)

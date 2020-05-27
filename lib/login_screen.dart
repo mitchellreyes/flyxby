@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
+      inAsyncCall: showSpinner,
       child: Scaffold(
         //need to change this app bar
         appBar: AppBar(

@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flyxby/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String id = 'Search Screen';
@@ -15,19 +16,32 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen>
     with SingleTickerProviderStateMixin {
   final _auth = FirebaseAuth.instance;
+  final _firestore = Firestore.instance;
   FirebaseUser loggedInUser;
+  Future<DocumentSnapshot> currentUserData;
+  String flyxby_username = '';
 
   void getCurrentUser() async {
     final user = await _auth.currentUser();
     try {
       if (user != null) {
         loggedInUser = user;
-        print(loggedInUser.email);
+        currentUserData =
+            _firestore.collection('users').document(loggedInUser.uid).get();
+        getCompoundUsername();
       }
     } catch (e) {
       //TODO: Need to catch exception
       print(e);
     }
+  }
+
+  void getCompoundUsername() {
+    currentUserData.then((value) {
+      flyxby_username = value.data['isVerified']
+          ? value.data['username']
+          : value.data['username'] + value.data['flyxby_id'];
+    });
   }
 
   AnimationController controller;
@@ -123,7 +137,7 @@ class _SearchScreenState extends State<SearchScreen>
                                 ),
                               ),
                               Text(
-                                'GetMooched#1234',
+                                flyxby_username,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],

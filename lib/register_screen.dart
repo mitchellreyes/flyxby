@@ -151,8 +151,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .document(newUser.user.uid)
                                   .setData({
                                 'flyxby_id': flyxby_id,
-                                'uid': newUser.user.uid,
                                 'username': username,
+                                'isVerified': false,
                               });
                             } catch (e) {
                               //TODO: Need to think of what to do if this fails. Will probably need to delete the user then go back to welcome screen.
