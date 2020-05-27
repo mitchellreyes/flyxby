@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flyxby/login_screen.dart';
+import 'package:flyxby/register_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'Welcome Screen';
@@ -49,7 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       height: 50.0,
                       color: Colors.blue,
                       onPressed: () {
-                        Navigator.pushNamed(context, LoginScreen.id);
+                        Navigator.pushNamed(context, RegisterScreen.id);
                       },
                     ),
                   ],

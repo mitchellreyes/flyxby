@@ -4,6 +4,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'dart:math';
 import 'constants.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String id = 'Profile Screen';
@@ -20,6 +21,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   bool _flewby = false;
   AnimationController controller;
   Animation animation;
+  int _orig_diff = 0;
+  int _xp_gained = 0;
 
   List<Container> entries = <Container>[
     Container(
@@ -109,6 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   void initState() {
     super.initState();
     _nextMoonLevel = ((_moonLevel + 300 * pow(2, _moonLevel / 7)) / 4).floor();
+    _orig_diff = _nextMoonLevel - _currentMoonXP;
     controller =
         AnimationController(duration: Duration(seconds: 10), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
@@ -228,8 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               duration: Duration(seconds: 5),
                               opacity: _flewby ? 1.0 : 0.0,
                               child: CircleAvatar(
-                                backgroundImage:
-                                    AssetImage('images/orbiter_vector.png'),
+                                child: SvgPicture.asset('images/orbiter.svg'),
                                 backgroundColor: Colors.transparent,
                                 radius: 40.0,
                               ),
@@ -254,7 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         ((log(_currentMoonXP) / log(2)) * 10)
                                             .floor();
                                     _currentMoonXP += xp_gain;
-
+                                    _xp_gained += xp_gain;
                                     while (_currentMoonXP >= _nextMoonLevel) {
                                       _moonLevel++;
                                       _nextMoonLevel += ((_moonLevel +
@@ -262,6 +265,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                       pow(2, _moonLevel / 7)) /
                                               4)
                                           .floor();
+                                      _xp_gained = 0;
+                                      _orig_diff =
+                                          _nextMoonLevel - _currentMoonXP;
                                     }
                                     _moonOpacity = min(
                                         1.0,
@@ -292,6 +298,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                     color: Colors.teal.shade200,
                   ),
                 ),
+                LinearProgressIndicator(value: _xp_gained / _orig_diff),
+                Text((_xp_gained / _orig_diff).toString(),
+                    style: TextStyle(color: Colors.white)),
                 Expanded(
                   child: OrientationBuilder(builder: (context, orientation) {
                     return GridView.count(

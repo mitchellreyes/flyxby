@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "713179336846",
+    "firebase_url": "https://flyxby-48437.firebaseio.com",
+    "project_id": "flyxby-48437",
+    "storage_bucket": "flyxby-48437.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713179336846:android:05d303e3d8eb924398b9df",
+        "android_client_info": {
+          "package_name": "com.flyxby.flyxby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713179336846-l5ogmrdsun9j1mv7uq58bif65a5ab5qh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBihH1L5xpmCMN1oBV9U_tO8b_gWIfEKlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713179336846-l5ogmrdsun9j1mv7uq58bif65a5ab5qh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

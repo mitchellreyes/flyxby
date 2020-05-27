@@ -3,6 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'dart:math';
 
 import 'package:flyxby/profile_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String id = 'Search Screen';
@@ -13,6 +14,22 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen>
     with SingleTickerProviderStateMixin {
+  final _auth = FirebaseAuth.instance;
+  FirebaseUser loggedInUser;
+
+  void getCurrentUser() async {
+    final user = await _auth.currentUser();
+    try {
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      //TODO: Need to catch exception
+      print(e);
+    }
+  }
+
   AnimationController controller;
   Animation animation;
 
@@ -31,6 +48,7 @@ class _SearchScreenState extends State<SearchScreen>
     controller.addListener(() {
       setState(() {});
     });
+    getCurrentUser();
   }
 
   @override
